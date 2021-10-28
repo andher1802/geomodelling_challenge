@@ -1,22 +1,15 @@
-import rasterio
-from rasterio.features import bounds
-
-from satsearch import Search
-from datetime import datetime, timedelta
-from pyproj import Transformer
-from json import load
-from utils.set_user_input import set_arguments_pipeline
-
-def read_sentinel_scenes():
-    input_arguments = set_arguments_pipeline()
-    print(input_arguments)
-
-   
-
-    
-    
+from data_collection.read_sentinel import *
+        
 def main():
-    read_sentinel_scenes()
+    tif_data = get_sentinel_red_nir_urls()
+    print(
+        len(tif_data["red_band_info"]),
+        len(tif_data["nir_band_info"]),
+        len(tif_data["dates"]),
+    )
+    for date_img in tif_data["dates"]:
+        print(date_img.strftime('%Y-%m-%d'))
+        
     
 if __name__ == '__main__':
     main()
