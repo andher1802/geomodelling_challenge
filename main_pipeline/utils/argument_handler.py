@@ -3,6 +3,10 @@ import argparse
 import enum
         
 class Argument(object):
+    """
+    This is a helper class for including input parameters into a pipeline
+    through the terminal.
+    """
     argument_name = None
     argument_type = None
     argument_type_name = None
@@ -42,6 +46,10 @@ class Argument(object):
 
         
 class Arguments_handler(object):
+    """
+    This class is a helper class for hanling input parameters from the terminal
+    it allows to easily define new input parameters with default values and help functions.
+    """
     arguments = []
     parser = None
     
