@@ -16,7 +16,7 @@ def set_arguments_values():
     arg_input_geometry = argument_handler.Argument("input_geometry")
     arg_input_geometry.set_argument_type("String")
     arg_input_geometry.set_argument_help_message("Path to the input geometry (.geojson) to intersect sentinel data (relative to the parent folder)")
-    arg_input_geometry.set_argument_default_value("./input_geometries/doberitz_multipolygon.geojson")
+    arg_input_geometry.set_argument_default_value("./main_pipeline/input_geometries/doberitz_multipolygon.geojson")
     arg_handler.add_input_argument(arg_input_geometry)
     arg_folder = argument_handler.Argument("folder")
     arg_folder.set_argument_type("String")
@@ -27,7 +27,7 @@ def set_arguments_values():
     arg_start_date.set_argument_type("Date")
     arg_start_date.set_argument_help_message("Start date to process format DD-MM-YYYY (hyphen sep)")
     default_end_date = datetime.date.today()
-    default_start_date = (default_end_date - datetime.timedelta(days=60)).strftime('%d-%m-%Y')
+    default_start_date = (default_end_date - datetime.timedelta(days=30)).strftime('%d-%m-%Y')
     arg_start_date.set_argument_default_value(default_start_date)
     arg_handler.add_input_argument(arg_start_date)
     arg_end_date = argument_handler.Argument("end_date")
@@ -55,12 +55,15 @@ def args_validation(args):
                     temp_argument_type_date = datetime.datetime.strptime(input_parameters_raw[arg.argument_name], '%d-%m-%Y')
                     input_parameters_checked[arg.argument_name] = temp_argument_type_date
             except:
-                print("wrong date format {0} date should match dd-mm-yyyy. {0} ommited".format(arg.argument_name))
+                print("wrong date format {0} date should match dd-mm-yyyy. exiting with error".format(arg.argument_name))
+                exit()
         elif arg.argument_type_name == "Integer" or arg.argument_type_name == "Integer_no_zero":
             if not type(input_parameters_raw[arg.argument_name]) is int:
                 raise TypeError("Only integers are allowed") 
+                exit()
         elif arg.argument_type_name == "Integer_no_zero" and input_parameters_raw[arg.argument_name] < 0:
             raise Exception("Sorry, no numbers below zero")
+            exit()
         else:
             input_parameters_checked[arg.argument_name] = input_parameters_raw[arg.argument_name]
     return input_parameters_checked
@@ -76,6 +79,8 @@ def set_arguments_pipeline():
     days_int = days_timedelta.days
     if days_int < 0:
         raise Exception('Start date should be set before end date')
+    if input_parameters_checked['end_date'] > datetime.datetime.today():
+        raise Exception('End date cannot be set in the future')
     download_end = input_parameters_checked['start_date'] + datetime.timedelta(days_int)
     download_start_date = input_parameters_checked['start_date'].strftime('%Y-%m-%d')
     download_end_date = download_end.strftime('%Y-%m-%d')

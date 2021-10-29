@@ -1,17 +1,12 @@
-from data_collection.read_sentinel import *
-        
+from data_collection.read_sentinel import get_sentinel_urls
+from data_processing.compute_raster_features import compute_ndvi
+    
 def main():
     bands=["red", "nir"]
-    tif_data = get_sentinel_urls(bands)
-    
-    
-       
-    print(
-        len(tif_data["red_band_info"]),
-        len(tif_data["nir_band_info"]),
-        len(tif_data["dates"]),
-    )
-        
+    tif_urls = get_sentinel_urls(bands)
+    #download_sentinel_data(tif_urls)
+    ndvi_results = compute_ndvi(tif_urls)
+    print(ndvi_results)
     
 if __name__ == "__main__":
     main()

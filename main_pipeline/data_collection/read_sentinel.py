@@ -3,16 +3,27 @@ from datetime import datetime, timedelta
 from pyproj import Transformer
 from json import load
 from utils.set_user_input import set_arguments_pipeline
+from utils.raster_helper import read_input_geometry
 
-def read_input_geometry(filename, geom_pos=-1):
+def pair_imagenames(url_band_1, url_band_2):
     """
-    Function that read a geojson file and return the last contained geometry.
+    This function makes sure that the images resulting from searching the data catalog
+    correspond to the same date and picture.
     """
-    file_path = filename
-    with open(file_path,"r") as fp:
-        file_content = load(fp)
-    geometry = file_content["features"][geom_pos]["geometry"]
-    return geometry
+    matched_images = {}
+    for url_info in url_band_1:
+        imageinfo = url_info.split("/")[-2]
+        if imageinfo not in matched_images:
+            matched_images[imageinfo] = [url_info]
+        else:
+            matched_images[imageinfo].append(url_info)
+    for url_info in url_band_2:
+        imageinfo = url_info.split("/")[-2]
+        if imageinfo not in matched_images:
+            matched_images[imageinfo] = [url_info]
+        else:
+            matched_images[imageinfo].append(url_info)
+    return matched_images
 
 def search_sentinel_api(input_arguments, collection_name="sentinel-s2-l2a-cogs", min_cloud_cover_pct=10):
     """
@@ -38,7 +49,7 @@ def search_sentinel_api(input_arguments, collection_name="sentinel-s2-l2a-cogs",
 def get_sentinel_urls(bands=["red", "nir"]):
     """
     This function executes the search using the input parameters
-    and returns a dictionary with the urls for downloading.
+    over the element84 and returns a dictionary with the urls for downloading.
     inputs:
     - data bands that corresponds to the sentinel datasets from the satsearch.
     """
@@ -58,3 +69,24 @@ def get_sentinel_urls(bands=["red", "nir"]):
         return band_info
     except Exception as e:
         raise Exception("error in search scenes: ", e)
+        
+from urllib import request
+import os
+
+def download_sentinel_data(band_inf):
+    """
+    This functions downloads the images which comefrom the object resulting
+    from searching the data catalog of the element84 api.
+    """
+    output_path = set_arguments_pipeline()["folder"]
+    for band in band_inf:
+        if "band_info" in band:
+            print(band)
+            for url_ref in band_inf[band]:
+                url_meta_data = url_ref.split("/")
+                filename = "_".join([url_meta_data[-2], url_meta_data[-1]])
+                filename_path = os.path.join(output_path, filename)
+                try:
+                    request.urlretrieve(url_ref, filename_path)
+                except Exception as e:
+                    raise Exception("error downloading image: ", e)
