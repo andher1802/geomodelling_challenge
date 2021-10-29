@@ -5,6 +5,7 @@ from json import load
 from utils.set_user_input import set_arguments_pipeline
 from utils.raster_helper import read_input_geometry
 
+
 def pair_imagenames(url_band_1, url_band_2):
     """
     This function makes sure that the images resulting from searching the data catalog
@@ -25,26 +26,30 @@ def pair_imagenames(url_band_1, url_band_2):
             matched_images[imageinfo].append(url_info)
     return matched_images
 
-def search_sentinel_api(input_arguments, collection_name="sentinel-s2-l2a-cogs", min_cloud_cover_pct=10):
+
+def search_sentinel_api(
+    input_arguments, collection_name="sentinel-s2-l2a-cogs", min_cloud_cover_pct=10
+):
     """
-    This function uses the sat-search package to search publicly available satellite imagery 
+    This function uses the sat-search package to search publicly available satellite imagery
     we set the api to the element84 for searching of sentinel 2 data, and the collection for
     cloud optimized images.
-    inputs: 
+    inputs:
     - input arguments: dates of start and end date for the search
     - collection: collection of the datacatalog to search
     - min_cloud_cover_pct: minimum threshold of cloudcover for the returned images
     """
     input_geometry = read_input_geometry(input_arguments["input_geometry"])
-    query = { "eo:cloud_cover": { "lt": min_cloud_cover_pct } }
+    query = {"eo:cloud_cover": {"lt": min_cloud_cover_pct}}
     search = Search(
         url="https://earth-search.aws.element84.com/v0",
         intersects=input_geometry,
         datetime=input_arguments["start_date"] + "/" + input_arguments["end_date"],
         collections=[collection_name],
-        query=query
+        query=query,
     )
     return search
+
 
 def get_sentinel_urls(bands=["red", "nir"]):
     """
@@ -55,7 +60,7 @@ def get_sentinel_urls(bands=["red", "nir"]):
     """
     search_scenes = search_sentinel_api(set_arguments_pipeline())
     urls = {}
-    try: 
+    try:
         items = search_scenes.items()
         items_dates = items.dates()
         band_info = {}
@@ -65,14 +70,20 @@ def get_sentinel_urls(bands=["red", "nir"]):
                     band_info[band + "_band_info"] = [item.asset(band)["href"]]
                 else:
                     band_info[band + "_band_info"].append(item.asset(band)["href"])
-            print("{0} references found for band {1}".format(len(band_info[band + "_band_info"]), band))
+            print(
+                "{0} references found for band {1}".format(
+                    len(band_info[band + "_band_info"]), band
+                )
+            )
         band_info["dates"] = items_dates
         return band_info
     except Exception as e:
         raise Exception("error in search scenes: ", e)
-        
+
+
 from urllib import request
 import os
+
 
 def download_sentinel_data(band_inf):
     """
@@ -90,12 +101,18 @@ def download_sentinel_data(band_inf):
                 filename_path = os.path.join(output_path, filename)
                 if os.path.exists(filename_path):
                     print(
-                          "file {0} already exists in output folder {1}, continuing without errors".format(filename, output_path)
-                         )
+                        "file {0} already exists in output folder {1}, continuing without errors".format(
+                            filename, output_path
+                        )
+                    )
                     continue
                 try:
                     request.urlretrieve(url_ref, filename_path)
                     progress_counter += 1
-                    print("{0} of {1} images downloaded".format(progress_counter, len(band_inf[band])))
+                    print(
+                        "{0} of {1} images downloaded".format(
+                            progress_counter, len(band_inf[band])
+                        )
+                    )
                 except Exception as e:
                     raise Exception("error downloading image: ", e)
