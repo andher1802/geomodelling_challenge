@@ -1,0 +1,14 @@
+pandas
+numpy
+scikit-learn
+merf
+gdal==3.2.1
+geos
+geopy
+matplotlib
+proj
+dask
+geemap
+rasterio
+geopandas
+sat-search
