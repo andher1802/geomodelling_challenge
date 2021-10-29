@@ -7,6 +7,8 @@ from osgeo import ogr, osr, gdal
 import rasterio
 import numpy as np
 import os
+import geopandas as gpd
+import json
 
 from utils.set_user_input import set_arguments_pipeline
 
@@ -15,9 +17,9 @@ def read_input_geometry(filename, geom_pos=-1):
     Function that read a geojson file and return the last contained geometry.
     """
     file_path = filename
-    with open(file_path,"r") as fp:
-        file_content = load(fp)
-    geometry = file_content["features"][geom_pos]["geometry"]
+    file_path = "./main_pipeline/input_geometries/doberitz_multipolygon.geojson"
+    input_geojson = gpd.read_file(file_path)
+    geometry = json.loads(input_geojson.dissolve().to_json())["features"][0]["geometry"]
     return geometry
 
 def read_url_image(url_ref, input_geometry):
@@ -56,24 +58,34 @@ def read_url_image(url_ref, input_geometry):
         return geo_fp.read(1, window=window)
 
 def array2raster(input_array, input_geometry, raster_template_path):
+    """
+    This function takes an np array, an input geometry and a raster template
+    and creates a raster with the values from the array.
+    input array and raster_template sizes should match.
+    """
     array_df = input_array
     bbox = bounds(input_geometry)
     output_path = set_arguments_pipeline()["folder"]
-    filename = "_".join([raster_template_url.split("/")[-2], "_NDVI.tif"])
+    filename = "_".join([raster_template_path.split("/")[-2], "_NDVI.tif"])
     filename_path = os.path.join(output_path, filename)
+    # if os.path.exists(filename_path):
+    #     print(
+    #         "file {0} already exists in output folder {1}, continuing without errors".format(filename, output_path)
+    #     )
+    # else:
     with rasterio.open(raster_template_path) as geo_fp:
         coord_transformer = Transformer.from_crs("epsg:4326", geo_fp.crs) 
         xmin, ymax = coord_transformer.transform(bbox[3], bbox[0])
         xmax, ymin = coord_transformer.transform(bbox[1], bbox[2])               
-        ncols = array_df.shape[0]
-        nrows = array_df.shape[1]
+        ncols = array_df.shape[1]
+        nrows = array_df.shape[0]
         xres = (xmax-xmin)/float(ncols)
         yres = (ymax-ymin)/float(nrows)
-        geotransform = (xmin,xres,0,ymax,0,yres)
+        geotransform = (xmin,xres,0,ymax,0,- yres)
         output_raster = gdal.GetDriverByName('GTiff').Create(filename_path, ncols, nrows, 1 ,gdal.GDT_Float32)
         output_raster.SetGeoTransform(geotransform)
         srs = osr.SpatialReference()
-        srs.ImportFromEPSG(4326)
+        srs.ImportFromEPSG(32632)
         output_raster.SetProjection(srs.ExportToWkt())
-        output_raster.GetRasterBand(1).WriteArray(array_df.T)
+        output_raster.GetRasterBand(1).WriteArray(array_df)
         output_raster.FlushCache()

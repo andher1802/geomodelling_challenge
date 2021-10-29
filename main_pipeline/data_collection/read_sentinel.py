@@ -65,6 +65,7 @@ def get_sentinel_urls(bands=["red", "nir"]):
                     band_info[band + "_band_info"] = [item.asset(band)["href"]]
                 else:
                     band_info[band + "_band_info"].append(item.asset(band)["href"])
+            print("{0} references found for band {1}".format(len(band_info[band + "_band_info"]), band))
         band_info["dates"] = items_dates
         return band_info
     except Exception as e:
@@ -82,11 +83,19 @@ def download_sentinel_data(band_inf):
     for band in band_inf:
         if "band_info" in band:
             print(band)
+            progress_counter = 0
             for url_ref in band_inf[band]:
                 url_meta_data = url_ref.split("/")
                 filename = "_".join([url_meta_data[-2], url_meta_data[-1]])
                 filename_path = os.path.join(output_path, filename)
+                if os.path.exists(filename_path):
+                    print(
+                          "file {0} already exists in output folder {1}, continuing without errors".format(filename, output_path)
+                         )
+                    continue
                 try:
                     request.urlretrieve(url_ref, filename_path)
+                    progress_counter += 1
+                    print("{0} of {1} images downloaded".format(progress_counter, len(band_inf[band])))
                 except Exception as e:
                     raise Exception("error downloading image: ", e)

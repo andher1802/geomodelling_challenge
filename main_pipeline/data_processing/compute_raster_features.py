@@ -16,6 +16,7 @@ def compute_ndvi(band_inf, bands=["red", "nir"]):
     nir_band = band_inf[bands[1]+post_fix]
     imagepairs_url_list = pair_imagenames(red_band, nir_band)
     ndvi_results = {}
+    progress_counter = 0
     for image_pair in imagepairs_url_list:
         band_red_url = [red_url for red_url in imagepairs_url_list[image_pair] if "B04" in red_url][0]
         band_nir_url = [red_url for red_url in imagepairs_url_list[image_pair] if "B08" in red_url][0]
@@ -26,4 +27,6 @@ def compute_ndvi(band_inf, bands=["red", "nir"]):
         ndvi_result = np.where ( check,  (band_nir_image - band_red_image) / (band_nir_image + band_red_image), -999 )
         array2raster(ndvi_result, input_geometry, band_red_url)
         ndvi_results[image_pair] = [ndvi_result]
+        progress_counter += 1
+        print("{0} of {1} images processed".format(progress_counter, len(imagepairs_url_list)))
     return ndvi_results
