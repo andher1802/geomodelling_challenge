@@ -59,26 +59,26 @@ def array2raster(input_array, input_geometry, raster_template_path):
     output_path = set_arguments_pipeline()["folder"]
     filename = "_".join([raster_template_path.split("/")[-2], "_NDVI.tif"])
     filename_path = os.path.join(output_path, filename)
-    # if os.path.exists(filename_path):
-    #     print(
-    #         "file {0} already exists in output folder {1}, continuing without errors".format(filename, output_path)
-    #     )
-    # else:
-    with rasterio.open(raster_template_path) as geo_fp:
-        coord_transformer = Transformer.from_crs("epsg:4326", geo_fp.crs)
-        xmin, ymax = coord_transformer.transform(bbox[3], bbox[0])
-        xmax, ymin = coord_transformer.transform(bbox[1], bbox[2])
-        ncols = array_df.shape[1]
-        nrows = array_df.shape[0]
-        xres = (xmax - xmin) / float(ncols)
-        yres = (ymax - ymin) / float(nrows)
-        geotransform = (xmin, xres, 0, ymax, 0, -yres)
-        output_raster = gdal.GetDriverByName("GTiff").Create(
-            filename_path, ncols, nrows, 1, gdal.GDT_Float32
+    if os.path.exists(filename_path):
+        print(
+            "file {0} already exists in output folder {1}, continuing without errors".format(filename, output_path)
         )
-        output_raster.SetGeoTransform(geotransform)
-        srs = osr.SpatialReference()
-        srs.ImportFromEPSG(32632)
-        output_raster.SetProjection(srs.ExportToWkt())
-        output_raster.GetRasterBand(1).WriteArray(array_df)
-        output_raster.FlushCache()
+    else:
+        with rasterio.open(raster_template_path) as geo_fp:
+            coord_transformer = Transformer.from_crs("epsg:4326", geo_fp.crs)
+            xmin, ymax = coord_transformer.transform(bbox[3], bbox[0])
+            xmax, ymin = coord_transformer.transform(bbox[1], bbox[2])
+            ncols = array_df.shape[1]
+            nrows = array_df.shape[0]
+            xres = (xmax - xmin) / float(ncols)
+            yres = (ymax - ymin) / float(nrows)
+            geotransform = (xmin, xres, 0, ymax, 0, -yres)
+            output_raster = gdal.GetDriverByName("GTiff").Create(
+                filename_path, ncols, nrows, 1, gdal.GDT_Float32
+            )
+            output_raster.SetGeoTransform(geotransform)
+            srs = osr.SpatialReference()
+            srs.ImportFromEPSG(32632)
+            output_raster.SetProjection(srs.ExportToWkt())
+            output_raster.GetRasterBand(1).WriteArray(array_df)
+            output_raster.FlushCache()
