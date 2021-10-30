@@ -61,7 +61,9 @@ def array2raster(input_array, input_geometry, raster_template_path):
     filename_path = os.path.join(output_path, filename)
     if os.path.exists(filename_path):
         print(
-            "file {0} already exists in output folder {1}, continuing without errors".format(filename, output_path)
+            "file {0} already exists in output folder {1}, continuing without errors".format(
+                filename, output_path
+            )
         )
     else:
         with rasterio.open(raster_template_path) as geo_fp:
@@ -78,7 +80,10 @@ def array2raster(input_array, input_geometry, raster_template_path):
             )
             output_raster.SetGeoTransform(geotransform)
             srs = osr.SpatialReference()
-            srs.ImportFromEPSG(32632)
+            crs_target = str(geo_fp.crs)
+            crs_target_int = int(crs_target.split(":")[1])
+            # srs.ImportFromEPSG(32632)
+            srs.ImportFromEPSG(crs_target_int)
             output_raster.SetProjection(srs.ExportToWkt())
             output_raster.GetRasterBand(1).WriteArray(array_df)
             output_raster.FlushCache()

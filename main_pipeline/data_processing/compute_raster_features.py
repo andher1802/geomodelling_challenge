@@ -23,7 +23,7 @@ def compute_ndvi(band_inf, bands=["red", "nir"]):
             red_url for red_url in imagepairs_url_list[image_pair] if "B04" in red_url
         ][0]
         band_nir_url = [
-            red_url for red_url in imagepairs_url_list[image_pair] if "B08" in red_url
+            nir_url for nir_url in imagepairs_url_list[image_pair] if "B08" in nir_url
         ][0]
         band_red_image = read_url_image(band_red_url, input_geometry).astype(float)
         band_nir_image = read_url_image(band_nir_url, input_geometry).astype(float)
