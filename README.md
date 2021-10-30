@@ -1,7 +1,7 @@
 # README
 
 The goal of this challenge is to create a Python script to search for Sentinel-2 scenes within a provided geometry and compute an average NDVI (Normalized Difference Vegetation Index).
-This module is structured in different modules: data_collection, data_processing, and utils.
+This project is structured in different modules: data_collection, data_processing, and utils.
 
 ## Utils Module
 
