@@ -27,11 +27,11 @@ Before you install the dependencies make sure the dependencies of gdal (libgdal-
 
 1. go to the root folder (geomodelling_challenge-main)
 2. in a terminal window type:
-   `virtualenv "name-virtual-env"`
-   `source "name-virtual-env"/bin/activate`
-   `pip install -r requirements.txt`
+   - `virtualenv "name-virtual-env"`
+   - `source "name-virtual-env"/bin/activate`
+   - `pip install -r requirements.txt`
 3. set the STAC_API_URL environment by typing
-   `export STAC_API_URL="https://earth-search.aws.element84.com/v0"`
+   - `export STAC_API_URL="https://earth-search.aws.element84.com/v0"`
 
 ## Run the package
 
@@ -39,7 +39,7 @@ There is a main script already prepared for running the workflow of the package 
 
 To run the script you should open a terminal and from the root folder (geomodelling_challenge-main) in type:
 
-`python main_pipeline/compute_ndvi_images.py --start_date <start_date> --end_date <end_date>`
+- `python main_pipeline/compute_ndvi_images.py --start_date <start_date> --end_date <end_date>`
 
 This workflow allows the user to include several input parameters:
 
@@ -52,7 +52,7 @@ This workflow allows the user to include several input parameters:
 
 Similarly, there is an alternative workflow that allows to download the image that resulted from the search catalog. (This downloads the large images from sentinel therefore should be used with caution)
 
-`python main_pipeline/download_sentinel_images.py --start_date <start_date> --end_date <end_date>`
+- `python main_pipeline/download_sentinel_images.py --start_date <start_date> --end_date <end_date>`
 
 ## See the results
 
@@ -68,4 +68,4 @@ This tests is used to check if everythig goes as expected after changes to the m
 
 To run the unit test (from the main folder of the application) type on the terminal:
 
-`pytest main_pipeline/unit_tests/validate_sentinel_functions.py`
+- `pytest main_pipeline/unit_tests/validate_sentinel_functions.py`
