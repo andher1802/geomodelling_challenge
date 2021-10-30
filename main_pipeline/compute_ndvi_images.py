@@ -8,7 +8,7 @@ def main():
     bands = ["red", "nir"]
     search_scenes = search_sentinel_api(set_arguments_pipeline())
     tif_urls = get_sentinel_urls(search_scenes, bands)
-    ndvi_results = compute_ndvi(tif_urls)
+    compute_ndvi(tif_urls)
 
 
 if __name__ == "__main__":

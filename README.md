@@ -39,7 +39,7 @@ This is an example of the workflow for computing the NDVI.
    bands = ["red", "nir"]
    search_scenes = search_sentinel_api(set_arguments_pipeline()) # prepare input arguments and use them for search the sentinel catalog
    tif_urls = get_sentinel_urls(search_scenes, bands) # get the urls from the search result
-   ndvi_results = compute_ndvi(tif_urls) # computes the NDVI from the resulting urls and store the results
+   compute_ndvi(tif_urls) # computes the NDVI from the resulting urls and store the results
 ```
 
 and for the download image workflow
