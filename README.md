@@ -27,9 +27,9 @@ Before you install the dependencies make sure the dependencies of gdal (libgdal-
 
 1. go to the root folder (geomodelling_challenge-main)
 2. in a terminal window type:
-   virtualenv <name-virtual-env>
-   source <name-virtual-env>/bin/activate
-   pip install -r requirements.txt
+   - virtualenv "name-virtual-env"
+   - source "name-virtual-env"/bin/activate
+   - pip install -r requirements.txt
 
 ## Run the package
 
