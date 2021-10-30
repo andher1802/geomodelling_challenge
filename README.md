@@ -21,7 +21,7 @@ This module contains all the processing steps for the package. Currently only ha
 
 # How to use this module
 
-This project is design to have a modular workflow. This design allows users/developers to create easy workflows located in the main_pipeline folder to reuse the methods written in the Data Collection and Data processing modules. Currently there are 2 workflows prepared for computing the NDVI of images that intersect an input geometry and in a given period of time, and other that downloads the sentinel images that also intersect the time/region specifications.
+This project is designed to have a modular workflow. This design allows users/developers to create easy workflows located in the main_pipeline folder to reuse the methods written in the Data Collection and Data processing modules. Currently there are 2 workflows prepared for computing the NDVI of images that intersect an input geometry and in a given period of time, and other that downloads the sentinel images that also intersect the time/region specifications.
 
 The workflows only use 3 methods:
 
