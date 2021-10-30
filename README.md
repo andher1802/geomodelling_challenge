@@ -29,6 +29,20 @@ The workflows only use 3 methods:
 2. Collect and retrieve the urls from the data catalog.
 3. Process the images and store the result.
 
+This is an example of the workflow for computing the NDVI.
+
+```
+   from data_collection.read_sentinel import get_sentinel_urls, download_sentinel_data, search_sentinel_api
+   from data_processing.compute_raster_features import compute_ndvi
+   from utils.set_user_input import set_arguments_pipeline
+
+   def main():
+      bands = ["red", "nir"]
+      search_scenes = search_sentinel_api(set_arguments_pipeline()) # prepare input arguments and use them for search the sentinel catalog
+      tif_urls = get_sentinel_urls(search_scenes, bands) # get the urls from the search result
+      ndvi_results = compute_ndvi(tif_urls) # computes the NDVI and store the results
+```
+
 The following are the instructions for installing and running these worflows.
 
 ## Install the dependencies
