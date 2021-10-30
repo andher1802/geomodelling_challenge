@@ -18,9 +18,11 @@ def read_input_geometry(filename, geom_pos=-1):
     Function that read a geojson file and return the last contained geometry.
     """
     file_path = filename
-    file_path = "./main_pipeline/input_geometries/doberitz_multipolygon.geojson"
     input_geojson = gpd.read_file(file_path)
-    geometry = json.loads(input_geojson.dissolve().to_json())["features"][0]["geometry"]
+    if len(input_geojson) > 1:
+        geometry = json.loads(input_geojson.dissolve().to_json())["features"][0]["geometry"]
+    else:
+        geometry = json.loads(input_geojson.to_json())["features"][0]["geometry"]
     return geometry
 
 

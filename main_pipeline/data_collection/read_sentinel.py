@@ -40,6 +40,7 @@ def search_sentinel_api(
     - min_cloud_cover_pct: minimum threshold of cloudcover for the returned images
     """
     input_geometry = read_input_geometry(input_arguments["input_geometry"])
+    print("searching data for {0}".format(input_arguments["input_geometry"]))
     query = {"eo:cloud_cover": {"lt": min_cloud_cover_pct}}
     search = Search(
         url="https://earth-search.aws.element84.com/v0",
@@ -47,6 +48,7 @@ def search_sentinel_api(
         datetime=input_arguments["start_date"] + "/" + input_arguments["end_date"],
         collections=[collection_name],
         query=query,
+        limit=200,
     )
     return search
 
@@ -79,6 +81,7 @@ def get_sentinel_urls(bands=["red", "nir"]):
         return band_info
     except Exception as e:
         raise Exception("error in search scenes: ", e)
+        exit()
 
 
 from urllib import request
