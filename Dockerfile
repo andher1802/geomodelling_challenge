@@ -15,6 +15,9 @@ ARG py_ver=3.8
 USER root
 RUN sudo apt-get update
 
+COPY ./sentinel_data ./sentinel_data
+COPY ./main_pipeline  ./main_pipeline
+
 COPY --chown=${NB_UID}:${NB_GID} environment.yml /home/$NB_USER/tmp/
 RUN cd /home/$NB_USER/tmp/ && \
      conda env create -p $CONDA_DIR/envs/$conda_env -f environment.yml && \
