@@ -85,7 +85,7 @@ Similarly, there is an alternative workflow that allows to download the image th
 On the root folder, there is a jupyter notebook to see the results of the NDVI computation and conducts a k-means clustering analysis over the stacked NDVI images located in the folder sentinel_data/NDVI_SEL/ (The selected scenes for our analysis)
 
 To run this notebook, please install jupyter lab and open the `main_workflow.ipynb` file in the jupyter lab environment.
-In this notebook also you can visualize the images located in the NDVI_TEST folder. The expected output can be found here [Challenge result](https://github.com/andher1802/geomodelling_challenge/blob/main/main_workflow.ipynb)
+In this notebook also you can visualize the images located in the NDVI_TEST folder. The expected output can be found here [Challenge result](https://andher1802.github.io/geomodelling_challenge/main_workflow.html)
 
 ## Unit Testing
 
