@@ -12,8 +12,8 @@ Utils module provides all the helper functions that are used to provide a more f
 Data collection is the module that search for the Sentinel-2 scenes using the Element84 APi STAC catalog. It consists of 3 main methods:
 
 - **search_sentinel_api**: performs a lazy search using satsearch and the Element84 APi STAC catalog.
-- **get_sentinel_urls**: Excecutes the search and returns the urls for the resulting scenes, bands can be adjusted but by default is set to red and nir bands.
-- **download_sentinel_data**: This method uses the urls from the previous step and download the scenes from the catalog. (This step is not required and not recommended for NDVI computation)
+- **get_sentinel_urls**: Excecutes the search and returns the urls for the resulting scenes, bands can be adjusted but by default are set to red and nir bands.
+- **download_sentinel_data**: This method uses the urls from the previous step and downloads the scenes from the catalog. (This step is not required and not recommended for NDVI computation)
 
 ## Data Processing
 
