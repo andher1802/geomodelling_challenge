@@ -39,7 +39,12 @@ To run the script you should open a terminal and from the root folder (geomodell
 
 1. python main_pipeline/read_sentinel_scenes.py --start_date <start_date> --end_date <end_date>
 
-This workflow allows the user to include several input parameters: - start_date: The start date for the search and analysis. Format is dd-mm-yyy (no quotes and with hyphen between day, month and year). Default value is the end_date less 10 days. - end_date: The end date for the search and analysis. Format is dd-mm-yyyy (The input handler does not allow end-dates in the future nor start dates after end dates). Default value is the current date. - input geometry: The relative path to the geojson for the search. (default is ./main_pipeline/input_geometries/doberitz_multipolygon.geojson) - folder: relative path to store the results. (default is ./sentinel_data)
+This workflow allows the user to include several input parameters:
+
+- start_date: The start date for the search and analysis. Format is dd-mm-yyy (no quotes and with hyphen between day, month and year). Default value is the end_date less 10 days.
+- end_date: The end date for the search and analysis. Format is dd-mm-yyyy (The input handler does not allow end-dates in the future nor start dates after end dates). Default value is the current date.
+- input geometry: The relative path to the geojson for the search. (default is ./main_pipeline/input_geometries/doberitz_multipolygon.geojson)
+- folder: relative path to store the results. (default is ./sentinel_data)
 
 IMPORTANT: It is important to run the script from the root folder, taking into account that the default values of the input arguments are relative to this folder. You also can adjust this parameters by providing the appropiate input_geometry and folder paths.
 
@@ -48,4 +53,4 @@ IMPORTANT: It is important to run the script from the root folder, taking into a
 On the root folder, there is a jupyter notebook to see the results of the analysis and conduct a k-means clustering analysis over the stacked NDVI images located in the folder sentinel_data/NDVI_SEL/ (The selected scenes for our analysis)
 
 To run this notebook, please install jupyter lab and open the notebook in the jupyter lab environment.
-In this notebook also you can visualize the images located in the NDVI_TEST folder. The expected output can be found here (Challenge result)[https://github.com/andher1802/geomodelling_challenge/blob/main/main_workflow.ipynb]
+In this notebook also you can visualize the images located in the NDVI_TEST folder. The expected output can be found here [Challenge result](https://github.com/andher1802/geomodelling_challenge/blob/main/main_workflow.ipynb)
