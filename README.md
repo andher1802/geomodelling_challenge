@@ -54,3 +54,12 @@ On the root folder, there is a jupyter notebook to see the results of the analys
 
 To run this notebook, please install jupyter lab and open the notebook in the jupyter lab environment.
 In this notebook also you can visualize the images located in the NDVI_TEST folder. The expected output can be found here [Challenge result](https://github.com/andher1802/geomodelling_challenge/blob/main/main_workflow.ipynb)
+
+## Unit Testing
+
+This package provides a unit test for the main workflow that uses a know input to test the expected output of the urls that resulted from the data catalog search.
+This tests is used to check if everythig goes as expected after changes to the main workflow of the applications.
+
+To run the unit test (from the main folder of the application) type on the terminal:
+
+- pytest main_pipeline/unit_tests/validate_sentinel_functions.py
