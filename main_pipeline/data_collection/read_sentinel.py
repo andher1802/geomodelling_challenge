@@ -2,7 +2,6 @@ from satsearch import Search
 from datetime import datetime, timedelta
 from pyproj import Transformer
 from json import load
-from utils.set_user_input import set_arguments_pipeline
 from utils.raster_helper import read_input_geometry
 
 
@@ -53,14 +52,13 @@ def search_sentinel_api(
     return search
 
 
-def get_sentinel_urls(bands=["red", "nir"]):
+def get_sentinel_urls(search_scenes, bands=["red", "nir"]):
     """
     This function executes the search using the input parameters
     over the element84 and returns a dictionary with the urls for downloading.
     inputs:
     - data bands that corresponds to the sentinel datasets from the satsearch.
     """
-    search_scenes = search_sentinel_api(set_arguments_pipeline())
     urls = {}
     try:
         items = search_scenes.items()

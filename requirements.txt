@@ -12,3 +12,4 @@ geemap
 rasterio
 geopandas
 sat-search
+pytest

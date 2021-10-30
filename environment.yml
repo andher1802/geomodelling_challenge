@@ -4,9 +4,8 @@ channels:
 dependencies:
   - python=3.8  
   - shapely
-  - fiona
   - pyproj
-  - rtree
+  - scikit-learn
   - geopy
   - matplotlib
   - mapclassify
@@ -22,19 +21,14 @@ dependencies:
   - dask-image
   - dask-ml
   - dask-labextension
-  - jupytext
   - gdal
   - libgdal
   - proj
   - geos
   - jupyter_client
   - ipykernel
-  - folium
   - libpysal
   - pygeos
-  - xarray
-  - holoviews
-  - earthengine-api
   - pip
   - pip:
           - jupyter-book
@@ -46,3 +40,4 @@ dependencies:
           - merf
           - statsmodels  
           - sat-search
+          - pytest
