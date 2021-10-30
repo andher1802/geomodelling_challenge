@@ -50,6 +50,8 @@ IMPORTANT: It is important to run the script from the root folder, taking into a
 
 Similarly, there is an alternative workflow that allows to download the image that resulted from the search catalog. (This downloads the large images from sentinel therefore should be used with caution)
 
+1. python main_pipeline/download_sentinel_images.py --start_date <start_date> --end_date <end_date>
+
 ## See the results
 
 On the root folder, there is a jupyter notebook to see the results of the analysis and conduct a k-means clustering analysis over the stacked NDVI images located in the folder sentinel_data/NDVI_SEL/ (The selected scenes for our analysis)
