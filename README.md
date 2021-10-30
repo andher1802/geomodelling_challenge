@@ -11,9 +11,9 @@ Utils module provides all the helper functions that are used to provide a more f
 
 Data collection is the module that search for the Sentinel-2 scenes using the Element84 APi STAC catalog. It consists of 3 main methods:
 
-- search_sentinel_api: performs a lazy search satsearch
-- get_sentinel_urls
-- download_sentinel_data
+- **search_sentinel_api**: performs a lazy search satsearch
+- **get_sentinel_urls**
+- **download_sentinel_data**
 
 # How to use this module
 
@@ -27,11 +27,11 @@ Before you install the dependencies make sure the dependencies of gdal (libgdal-
 
 1. go to the root folder (geomodelling_challenge-main)
 2. in a terminal window type:
-   - `virtualenv "name-virtual-env"`
-   - `source "name-virtual-env"/bin/activate`
-   - `pip install -r requirements.txt`
+   `virtualenv "name-virtual-env"`
+   `source "name-virtual-env"/bin/activate`
+   `pip install -r requirements.txt`
 3. set the STAC_API_URL environment by typing
-   - `export STAC_API_URL="https://earth-search.aws.element84.com/v0"`
+   `export STAC_API_URL="https://earth-search.aws.element84.com/v0"`
 
 ## Run the package
 
@@ -39,20 +39,20 @@ There is a main script already prepared for running the workflow of the package 
 
 To run the script you should open a terminal and from the root folder (geomodelling_challenge-main) in type:
 
-1. python main_pipeline/compute_ndvi_images.py --start_date <start_date> --end_date <end_date>
+`python main_pipeline/compute_ndvi_images.py --start_date <start_date> --end_date <end_date>`
 
 This workflow allows the user to include several input parameters:
 
-- start_date: The start date for the search and analysis. Format is dd-mm-yyy (no quotes and with hyphen between day, month and year). Default value is the end_date less 10 days.
-- end_date: The end date for the search and analysis. Format is dd-mm-yyyy (The input handler does not allow end-dates in the future nor start dates after end dates). Default value is the current date.
-- input geometry: The relative path to the geojson for the search. (default is ./main_pipeline/input_geometries/doberitz_multipolygon.geojson)
-- folder: relative path to store the results. (default is ./sentinel_data)
+- **start_date**: The start date for the search and analysis. Format is dd-mm-yyy (no quotes and with hyphen between day, month and year). Default value is the end_date less 10 days.
+- **end_date**: The end date for the search and analysis. Format is dd-mm-yyyy (The input handler does not allow end-dates in the future nor start dates after end dates). Default value is the current date.
+- **input geometry**: The relative path to the geojson for the search. (default is ./main_pipeline/input_geometries/doberitz_multipolygon.geojson)
+- **folder**: relative path to store the results. (default is ./sentinel_data)
 
-IMPORTANT: It is important to run the script from the root folder, taking into account that the default values of the input arguments are relative to this folder. You also can adjust this parameters by providing the appropiate input_geometry and folder paths.
+**IMPORTANT**: It is important to run the script from the root folder, taking into account that the default values of the input arguments are relative to this folder. You also can adjust this parameters by providing the appropiate input_geometry and folder paths.
 
 Similarly, there is an alternative workflow that allows to download the image that resulted from the search catalog. (This downloads the large images from sentinel therefore should be used with caution)
 
-1. python main_pipeline/download_sentinel_images.py --start_date <start_date> --end_date <end_date>
+`python main_pipeline/download_sentinel_images.py --start_date <start_date> --end_date <end_date>`
 
 ## See the results
 
@@ -68,4 +68,4 @@ This tests is used to check if everythig goes as expected after changes to the m
 
 To run the unit test (from the main folder of the application) type on the terminal:
 
-- pytest main_pipeline/unit_tests/validate_sentinel_functions.py
+`pytest main_pipeline/unit_tests/validate_sentinel_functions.py`
