@@ -33,7 +33,9 @@ The following are the instructions for installing and running these worflows.
 
 ## Install the dependencies
 
-### Using the module in the local computer
+There are two options for installing this package:
+
+### Option 1. Using the module in the local computer
 
 You can use this module by creating a virtual environment and install the required dependencies that are located in the requirement.txt file.
 
@@ -47,10 +49,9 @@ Before you install the dependencies make sure the dependencies of gdal (libgdal-
 3. set the STAC_API_URL environment by typing
    - `export STAC_API_URL="https://earth-search.aws.element84.com/v0"`
 
-### Using the docker image
+### Option 2. Using the docker image
 
-A relatively easier installation is to use the dockerfile that is on the root folder of the project, and access the module from the jupyter lab that is set by the container.
-For doing this process you have to install docker in your OS, and run the following commands:
+If you do not want to install all dependencies, and have docker installed in your computer, you can use the dockerfile that is located on the root folder of this project. Then access the modules from the jupyter lab that is set by the container. For doing this run in your terminal the following commands (from the root folder of this project):
 
 - `docker build -t geo-modelling-challenge .` (geo-modelling-challenge is the name of the image, you can change it accordingly your preferences).
 - `docker run -p 8888:8888 geo-modelling-challenge` (port mapping for the jupyter lab)
@@ -61,9 +62,9 @@ Once you access the jupyter lab you can go to the terminal inside the jupyter ID
 
 ## Run the package
 
-There is a main script already prepared for running the workflow of the package in the main_pipeline folder `compute_ndvi_images.py`. This script do the search on the datacatalog between two dates and an intersect input geometry, computes the NDVI, and saves the result in the output folder in raster format (.tif with the same crs than the original sentinel image):
+There is a main script already prepared for running the workflow of the package in the main_pipeline folder `compute_ndvi_images.py`. This script performs the search on the datacatalog between two dates (time range for the analysis) and an intersected input geometry. Then it computes the NDVI for each resulting image in the catalog, and saves the result in raster format (.tif files with the same crs than the original sentinel image):
 
-To run the script you should open a terminal and from the root folder (geomodelling_challenge-main or root in the case of the docker option) in type:
+To run the script you should open a terminal and from the root folder (geomodelling_challenge-main or root in the case of the docker container) and type:
 
 - `python main_pipeline/compute_ndvi_images.py --start_date <start_date> --end_date <end_date>`
 
