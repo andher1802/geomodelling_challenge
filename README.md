@@ -37,7 +37,7 @@ There is a main script already prepared for running the workflow of the package 
 
 To run the script you should open a terminal and from the root folder (geomodelling_challenge-main) in type:
 
-1. python main_pipeline/read_sentinel_scenes.py --start_date <start_date> --end_date <end_date>
+1. python main_pipeline/compute_ndvi_images.py --start_date <start_date> --end_date <end_date>
 
 This workflow allows the user to include several input parameters:
 
@@ -47,6 +47,8 @@ This workflow allows the user to include several input parameters:
 - folder: relative path to store the results. (default is ./sentinel_data)
 
 IMPORTANT: It is important to run the script from the root folder, taking into account that the default values of the input arguments are relative to this folder. You also can adjust this parameters by providing the appropiate input_geometry and folder paths.
+
+Similarly, there is an alternative workflow that allows to download the image that resulted from the search catalog. (This downloads the large images from sentinel therefore should be used with caution)
 
 ## See the results
 

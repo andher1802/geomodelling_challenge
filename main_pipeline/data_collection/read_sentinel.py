@@ -3,6 +3,7 @@ from datetime import datetime, timedelta
 from pyproj import Transformer
 from json import load
 from utils.raster_helper import read_input_geometry
+from utils.set_user_input import set_arguments_pipeline
 
 
 def pair_imagenames(url_band_1, url_band_2):
