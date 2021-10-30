@@ -55,15 +55,15 @@ For doing this process you have to install docker in your OS, and run the follow
 - `docker build -t geo-modelling-challenge .` (geo-modelling-challenge is the name of the image, you can change it accordingly your preferences).
 - `docker run -p 8888:8888 geo-modelling-challenge` (port mapping for the jupyter lab)
 
-Once you access the jupyter lab you can go to the terminal inside the jupyter environmen, activate the conda geo_pipeline environment and run the package using the instructions on the next section. For having persistent results you should add a docker volume and set the output folder accordingly.
+Once you access the jupyter lab you can go to the terminal inside the jupyter IDE, activate the conda geo_pipeline environment and run the package using the instructions on the next section. For having persistent results you should add a docker volume and set the output folder accordingly.
 
-**IMPORTANT**: The docker image building step requires arounf 5Gb of disk and lasts around 2 hours in a 8Gb RAM laptop.
+**IMPORTANT**: The docker image building step requires around 5Gb of disk and lasts around 2 hours in a 8Gb RAM laptop.
 
 ## Run the package
 
-There is a main script already prepared for running the workflow of the package in the main_pipeline folder `compute_ndvi_images.py`. This script do the search on the datacatalog between two dates and an intersect input geometry, computes the NDVI, and save the result int the output folder in raster format (.tif with the same crs than the original sentinel image):
+There is a main script already prepared for running the workflow of the package in the main_pipeline folder `compute_ndvi_images.py`. This script do the search on the datacatalog between two dates and an intersect input geometry, computes the NDVI, and saves the result in the output folder in raster format (.tif with the same crs than the original sentinel image):
 
-To run the script you should open a terminal and from the root folder (geomodelling_challenge-main) in type:
+To run the script you should open a terminal and from the root folder (geomodelling_challenge-main or root in the case of the docker option) in type:
 
 - `python main_pipeline/compute_ndvi_images.py --start_date <start_date> --end_date <end_date>`
 
@@ -76,21 +76,21 @@ This workflow allows the user to include several input parameters:
 
 **IMPORTANT**: It is important to run the script from the root folder, taking into account that the default values of the input arguments are relative to this folder. You also can adjust this parameters by providing the appropiate input_geometry and folder paths.
 
-Similarly, there is an alternative workflow that allows to download the image that resulted from the search catalog. (This downloads the large images from sentinel therefore should be used with caution)
+Similarly, there is an alternative workflow that allows to download the image that resulted from the search catalog. (This worflow downloads the large images from sentinel therefore should be used with caution)
 
 - `python main_pipeline/download_sentinel_images.py --start_date <start_date> --end_date <end_date>`
 
 ## Results and Clustering Analysis
 
-On the root folder, there is a jupyter notebook to see the results of the analysis and conduct a k-means clustering analysis over the stacked NDVI images located in the folder sentinel_data/NDVI_SEL/ (The selected scenes for our analysis)
+On the root folder, there is a jupyter notebook to see the results of the NDVI computation and conducts a k-means clustering analysis over the stacked NDVI images located in the folder sentinel_data/NDVI_SEL/ (The selected scenes for our analysis)
 
-To run this notebook, please install jupyter lab and open the notebook in the jupyter lab environment.
+To run this notebook, please install jupyter lab and open the `main_workflow.ipynb` file in the jupyter lab environment.
 In this notebook also you can visualize the images located in the NDVI_TEST folder. The expected output can be found here [Challenge result](https://github.com/andher1802/geomodelling_challenge/blob/main/main_workflow.ipynb)
 
 ## Unit Testing
 
-This package provides a unit test for the main workflow that uses a know input to test the expected output of the urls that resulted from the data catalog search.
-This tests is used to check if everythig goes as expected after changes to the main workflow of the applications.
+This package also contains unit test for the main workflow that uses a known input and tests the expected output resulting from the data catalog search.
+This tests is used to check if everything goes as expected after changes made to the main workflow or other methods in the project.
 
 To run the unit test (from the main folder of the application) type on the terminal:
 
