@@ -114,6 +114,8 @@ def set_arguments_pipeline():
     days_int = days_timedelta.days
     if days_int < 0:
         raise Exception("Start date should be set before end date")
+    if input_parameters_checked["start_date"] < datetime.datetime(2019, 4, 1, 0, 0):
+        raise Exception("Too old dates are not allowed")
     if input_parameters_checked["end_date"] > datetime.datetime.today():
         raise Exception("End date cannot be set in the future")
     download_end = input_parameters_checked["start_date"] + datetime.timedelta(days_int)
