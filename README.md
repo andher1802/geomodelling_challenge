@@ -31,7 +31,7 @@ The workflows only use 3 methods:
 
 This is an example of the workflow for computing the NDVI.
 
-```
+```python
    from data_collection.read_sentinel import get_sentinel_urls, download_sentinel_data, search_sentinel_api
    from data_processing.compute_raster_features import compute_ndvi
    from utils.set_user_input import set_arguments_pipeline
