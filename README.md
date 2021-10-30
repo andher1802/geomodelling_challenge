@@ -11,11 +11,26 @@ Utils module provides all the helper functions that are used to provide a more f
 
 Data collection is the module that search for the Sentinel-2 scenes using the Element84 APi STAC catalog. It consists of 3 main methods:
 
-- **search_sentinel_api**: performs a lazy search satsearch
-- **get_sentinel_urls**
-- **download_sentinel_data**
+- **search_sentinel_api**: performs a lazy search using satsearch and the Element84 APi STAC catalog.
+- **get_sentinel_urls**: Excecutes the search and returns the urls for the resulting scenes, bands can be adjusted but by default is set to red and nir bands.
+- **download_sentinel_data**: This method uses the urls from the previous step and download the scenes from the catalog. (This step is not required and not recommended for NDVI computation)
+
+## Data Processing
+
+This module contains all the processing steps for the package. Currently only has the NDVI computation using the urls from the `get_sentinel_urls` method.
 
 # How to use this module
+
+This project is design to have a modular workflow. The way as it is design is to allow to create easy workflows located on the main_pipeline folder that reuse the methods written in the Data Collection and Data processing modules.
+Currently there are 2 workflows prepared for computing the NDVI of images that intersect an input geometry and in a given period of time, and other that downloads the sentinel images that also intersect the time/region specifications.
+
+The workflows only use 3 methods:
+
+1. prepare the user input validation.
+2. Collect and retrieve the urls from the data catalog.
+3. Process the images and store the result.
+
+The following are the instructions for installing and running these worflows.
 
 ## Install the dependencies
 
@@ -47,7 +62,7 @@ Once you access the jupyter lab you can go to the terminal inside the jupyter en
 
 ## Run the package
 
-There is a main script already prepared for running the workflow of the package in the main_pipeline folder. This script do the search on the datacatalog between two dates and an intersect input geometry, computes the NDVI, and save the result int the output folder in raster format (.tif with the same crs than the original sentinel image):
+There is a main script already prepared for running the workflow of the package in the main_pipeline folder `compute_ndvi_images.py`. This script do the search on the datacatalog between two dates and an intersect input geometry, computes the NDVI, and save the result int the output folder in raster format (.tif with the same crs than the original sentinel image):
 
 To run the script you should open a terminal and from the root folder (geomodelling_challenge-main) in type:
 
