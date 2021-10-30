@@ -33,6 +33,18 @@ Before you install the dependencies make sure the dependencies of gdal (libgdal-
 3. set the STAC_API_URL environment by typing
    - `export STAC_API_URL="https://earth-search.aws.element84.com/v0"`
 
+### Using the docker image
+
+A relatively easier installation is to use the dockerfile that is on the root folder of the project, and access the module from the jupyter lab that is set by the container.
+For doing this process you have to install docker in your OS, and run the following commands:
+
+- `docker build -t geo-modelling-challenge .` (geo-modelling-challenge is the name of the image, you can change it accordingly your preferences).
+- `docker run -p 8888:8888 geo-modelling-challenge` (port mapping for the jupyter lab)
+
+Once you access the jupyter lab you can go to the terminal inside the jupyter environmen, activate the conda geo_pipeline environment and run the package using the instructions on the next section. For having persistent results you should add a docker volume and set the output folder accordingly.
+
+**IMPORTANT**: The docker image building step requires arounf 5Gb of disk and lasts around 2 hours in a 8Gb RAM laptop.
+
 ## Run the package
 
 There is a main script already prepared for running the workflow of the package in the main_pipeline folder. This script do the search on the datacatalog between two dates and an intersect input geometry, computes the NDVI, and save the result int the output folder in raster format (.tif with the same crs than the original sentinel image):

@@ -30,3 +30,5 @@ RUN $CONDA_DIR/envs/${conda_env}/bin/python -m ipykernel install --user --name=$
 ENV PATH $CONDA_DIR/envs/${conda_env}/bin:$PATH
 ENV CONDA_DEFAULT_ENV ${conda_env}
 ENV STAC_API_URL "https://earth-search.aws.element84.com/v0"
+
+COPY . .
