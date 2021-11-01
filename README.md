@@ -91,6 +91,10 @@ There is a main script already prepared for running the workflow of the package 
 
 To run the script you should open a terminal and from the root folder (geomodelling_challenge-main or root in the case of the docker container) and type:
 
+- `python main_pipeline/compute_ndvi_images.py`
+
+In addition, you can also add input parameters
+
 - `python main_pipeline/compute_ndvi_images.py --start_date <start_date> --end_date <end_date>`
 
 This workflow allows the user to include several input parameters:
