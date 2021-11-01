@@ -93,9 +93,9 @@ To run the script you should open a terminal and from the root folder (geomodell
 
 - `python main_pipeline/compute_ndvi_images.py`
 
-In addition, you can also add input parameters
+In addition, you can also add input parameters (if you omit input parameters, the script will take the default values)
 
-- `python main_pipeline/compute_ndvi_images.py --start_date <start_date> --end_date <end_date>`
+- `python main_pipeline/compute_ndvi_images.py --start_date <start_date> --end_date <end_date> --input_geometry <input geometry path> --folder <output folder path>`
 
 This workflow allows the user to include several input parameters:
 
